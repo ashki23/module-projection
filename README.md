@@ -12,7 +12,8 @@ Spack creates module files in both Lua or TCL formats automatically. This applic
 cd /opt
 git clone https://github.com/spack/spack.git
 cd spack
-git checkout -b releases/latest
+git checkout -b spack-latest
+git pull origin releases/latest
 source share/spack/setup-env.sh
 spack install lmod
 ```
@@ -92,7 +93,7 @@ To activat lmod and update the modulepath, add the following to `.bashrc` file (
 ``` bash
 export MODULEPATH='/opt/modulefiles/'
 source /opt/spack/opt/spack/linux-ubuntu20.04*/gcc-9.3.0/lmod-8*/lmod/lmod/init/bash
-alias spack-setup-env='git -C /opt/spack checkout releases/latest && git -C /opt/spack pull origin releases/latest && source /opt/spack/share/spack/setup-env.sh && module unuse /opt/spack/share/spack/modules/*'
+alias spack-setup-env='git -C /opt/spack checkout spack-latest && git -C /opt/spack pull origin releases/latest && source /opt/spack/share/spack/setup-env.sh && module unuse /opt/spack/share/spack/modules/*'
 ```
 
 ## Workflow
