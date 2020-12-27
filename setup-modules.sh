@@ -3,10 +3,7 @@
 ## By Ashkan Mirzaee Nov 2020
 ## --------------------------
 
-core=( "/opt/spack/share/spack/lmod/linux-centos7-x86_64/Core"
-       "/opt/spack/share/spack/lmod/linux-centos7-x86_64/gcc/9.3.0" 
-       "/opt/spack/share/spack/lmod/linux-centos7-x86_64/openmpi/4.0.5-twjcwul/gcc/9.3.0" )
-
+core=( "/opt/spack/share/spack/lmod/linux-*-x86_64/Core" )
 modulefiles="/opt/modulefiles"
 ##rm -r ${modulefiles}/*
 
