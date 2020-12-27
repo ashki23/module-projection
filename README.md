@@ -68,12 +68,10 @@ This will create modulefiles under `/opt/spack/share/spack/lmod/linux-*-x86_64/C
 
 ## Project modulefiles
 
-Use `source setup-modules.sh` to project files. By default
-`setup-modules.sh` uses `/opt/modulefiles/` for modulepath. Modify `modulefiles` variable to change the path.
+Use `source setup-modules.sh` to project files. By default `setup-modules.sh` uses `/opt/modulefiles/` for modulepath. Modify `modulefiles` variable to change the path. 
 
-`setup-modules.sh` do three tasks:
- 
- - censor libraries and dependencies including:
+`setup-modules.sh` does three tasks:
+ 1. censors libraries and dependencies including:
     - `^lib.*`
     - `^util-.*`
     - `^perl-.*`
@@ -84,12 +82,12 @@ Use `source setup-modules.sh` to project files. By default
     - `^docbook-.*`
     - `.*proto$`
     - `.*font.*`
- - Drop hashes
- - Create links from actual modulefiles to `/opt/modulefiles/`
+ 1. Drops hashes
+ 1. Creates links from actual modulefiles to `/opt/modulefiles/`
 
 ## Bashrc
 
-Add the following to the `.bashrc` file (need to modify lmod path based on your environment):
+To activat lmod and update the modulepath, add the following to `.bashrc` file (need to modify lmod path based on your environment):
 
 ``` bash
 export MODULEPATH='/opt/modulefiles/'
