@@ -12,7 +12,7 @@ modulefiles="/opt/modulefiles"
 
 for dir in ${core[*]}; do
     for i in $(ls $dir); do
-	if echo $i | grep -Pqv "^lib.*|^util-.*|^perl-.*|^py-.*|^xcb-.*|^go-.*|^at-.*|^docbook-.*|.*proto$|.*font.*"; then
+	if echo $i | grep -Pqv "^lib.*|^util-.*|^perl-.*|^py-.*|^xcb-.*|^go-.*|^at-.*|^docbook-.*|.*proto$|.*font.*|^autoconf.*|^automake.*|harfbuzz|cairo"; then
 	    ver=$(echo $dir/$i/* | tr " " "\n" | grep -Po "(?<=/$i/).*");
 	    if echo $ver | grep -q "9.3.0/gcc/"; then 
 		ver=$(echo $ver | grep -Po "(?<=9.3.0/gcc/).*"); 
