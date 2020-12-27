@@ -68,6 +68,5 @@ Add the following to the `.bashrc` file (need to modify lmod path based on your 
 ``` bash
 export MODULEPATH='/opt/modulefiles/'
 source /opt/spack/opt/spack/linux-ubuntu20.04*/gcc-9.3.0/lmod-8*/lmod/lmod/init/bash
-alias spack-setup-env='source /opt/spack/share/spack/setup-env.sh && module unuse /spack/share/spack/modules/*'
+alias spack-setup-env='git -C /opt/spack checkout releases/latest && git -C /opt/spack pull origin releases/latest && source /opt/spack/share/spack/setup-env.sh && module unuse /opt/spack/share/spack/modules/*'
 ```
-
