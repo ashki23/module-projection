@@ -33,6 +33,14 @@ modules:
       - gcc@9.3.0
     blacklist:
       - '^lua'
+      - autoconf-archive
+      - autoconf
+      - automake
+      - bzip2
+      - cairo
+      - harfbuzz
+      - openssh
+      - openssl
     whitelist:
       - gcc
       - openmpi
@@ -56,10 +64,28 @@ To refresh modulefiles run:
 spack module lmod refresh --delete-tree -y
 ```
 
+This will create modulefiles under `/opt/spack/share/spack/lmod/linux-*-x86_64/Core/`. In this modulefiles we keep hashes in order to prevent possible confilcts. Note that lmod do not create a modulefile for libraries under the `blacklist` which helps to reduce noises and creating a modulefile for dependencies and libraries. We also use `setup-modules.sh` to censor libraries by their names using wildcards. 
+
 ## Project modulefiles
 
 Use `source setup-modules.sh` to project files. By default
 `setup-modules.sh` uses `/opt/modulefiles/` for modulepath. Modify `modulefiles` variable to change the path.
+
+`setup-modules.sh` do three tasks:
+ 
+ - censor libraries and dependencies including:
+    - `^lib.*`
+    - `^util-.*`
+    - `^perl-.*`
+    - `^py-.*`
+    - `^xcb-.*`
+    - `^go-.*`
+    - `^at-.*`
+    - `^docbook-.*`
+    - `.*proto$`
+    - `.*font.*`
+ - Drop hashes
+ - Create links from actual modulefiles to `/opt/modulefiles/`
 
 ## Bashrc
 
