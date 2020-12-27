@@ -7,7 +7,8 @@ core=( "/opt/spack/share/spack/lmod/linux-centos7-x86_64/Core"
        "/opt/spack/share/spack/lmod/linux-centos7-x86_64/gcc/9.3.0" 
        "/opt/spack/share/spack/lmod/linux-centos7-x86_64/openmpi/4.0.5-twjcwul/gcc/9.3.0" )
 
-##rm -r /opt/modulefiles/*
+modulefiles="/opt/modulefiles"
+##rm -r ${modulefiles}/*
 
 for dir in ${core[*]}; do
     for i in $(ls $dir); do
@@ -16,10 +17,10 @@ for dir in ${core[*]}; do
 	    if echo $ver | grep -q "9.3.0/gcc/"; then 
 		ver=$(echo $ver | grep -Po "(?<=9.3.0/gcc/).*"); 
 	    fi
-	    install -dvp /opt/modulefiles/$i;
+	    install -dvp ${modulefiles}/$i;
 	    for j in $ver; do
 		k=$(echo $j | grep -Po ".*(?=-\w{4}\.lua)");
-		ln -sf $dir/$i/$j* /opt/modulefiles/$i/$k.lua;
+		ln -sf $dir/$i/$j* ${modulefiles}/$i/$k.lua;
 	    done
 	fi
     done
