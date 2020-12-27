@@ -96,3 +96,10 @@ export MODULEPATH='/opt/modulefiles/'
 source /opt/spack/opt/spack/linux-ubuntu20.04*/gcc-9.3.0/lmod-8*/lmod/lmod/init/bash
 alias spack-setup-env='git -C /opt/spack checkout releases/latest && git -C /opt/spack pull origin releases/latest && source /opt/spack/share/spack/setup-env.sh && module unuse /opt/spack/share/spack/modules/*'
 ```
+
+## Workflow
+
+- Activate Spack env and update the branch: `spack-setup-env`
+- Check specs: `spack spec -I <software>` 
+- Install: `spack install <software>`
+- Project modulefiles: `source setup-modules.sh`
