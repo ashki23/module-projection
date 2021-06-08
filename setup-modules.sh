@@ -4,21 +4,24 @@
 ## --------------------------
 
 core=( "/opt/spack/share/spack/lmod/linux-*-x86_64/Core" )
-modulefiles="/opt/modulefiles"
-##rm -r ${modulefiles}/*
+dest="/opt/modulefiles"
 
+##rm -r /opt/modulefiles/*
 for dir in ${core[*]}; do
-    for i in $(ls $dir); do
-	if echo $i | grep -Pqv "^lib.*|^util-.*|^perl-.*|^py-.*|^xcb-.*|^go-.*|^at-.*|^docbook-.*|.*proto$|.*font.*"; then
-	    ver=$(echo $dir/$i/* | tr " " "\n" | grep -Po "(?<=/$i/).*");
-	    if echo $ver | grep -q "9.3.0/gcc/"; then 
-		ver=$(echo $ver | grep -Po "(?<=9.3.0/gcc/).*"); 
-	    fi
-	    install -dvp ${modulefiles}/$i;
-	    for j in $ver; do
-		k=$(echo $j | grep -Po ".*(?=-\w{4}\.lua)");
-		ln -sf $dir/$i/$j* ${modulefiles}/$i/$k.lua;
-	    done
-	fi
+    for i in $(ls ${dir}); do
+        if echo ${i} | grep -Pqv "^lib.*|^util-.*|^perl-.*|^py-.*|^r-.*|^xcb-.*|^go-.*|^lua-.*|^at-.*|.*font.*|^autoconf-.*|^docbook-.*|.*-util$"; then	    
+            for f in $(ls ${dir}/${i}/*); do
+		v=$(basename ${f})
+		k=$(echo ${v} | grep -Po ".*(?=-\w{4}\.lua)");
+		install -dvp ${dest}/${i};
+                ln -sf ${dir}/${i}/${v} ${dest}/${i}/${k}.lua;
+            done
+        fi
     done
 done
+
+## Remove broken links
+for bl in $(find ${dest} -xtype l); do rm -v ${bl}; done
+
+## Unset variables
+unset core dest dir i f v k bl
