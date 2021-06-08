@@ -1,7 +1,7 @@
 # Spack module projection
 *[Ashkan Mirzaee](https://ashki23.github.io/index.html)*
 
-Spack creates module files in both Lua or TCL formats automatically. This application screen modulefiles to only provides the list of softwares in the modulepath.
+Spack creates modulefiles in both Lua or Tcl formats. But the generated modulefiles includes hash numbers and located in in the Spack path. We can modify Spack to generate modulefules with no hash but it can cause many problems when there are modules with the same name. Also, Spack creates modulefile for all the depecndencies that many of them not using directly by users. This software orgenizes the namespace of the modulefiles and creates a symbolic link from them to a more familiar path (i.e., `/opt/modulefiles/`) and let users to exclude modulefiles by using wildcards.
 
 -----
 
@@ -18,8 +18,7 @@ source share/spack/setup-env.sh
 spack install lmod
 ```
 
-## Modulefiles
-
+## Modulefiles config
 Create the following module config file (`modules.yaml`) at `/opt/spack/etc/spack/`:
 
 ```yaml
@@ -65,29 +64,16 @@ To refresh modulefiles run:
 spack module lmod refresh --delete-tree -y
 ```
 
-This will create modulefiles under `/opt/spack/share/spack/lmod/linux-*-x86_64/Core/`. In this modulefiles we keep hashes in order to prevent possible confilcts. Note that lmod do not create a modulefile for libraries under the `blacklist` which helps to reduce noises and creating a modulefile for dependencies and libraries. We also use `setup-modules.sh` to censor libraries by their names using wildcards. 
+This will create modulefiles under `/opt/spack/share/spack/lmod/linux-*-x86_64/Core/`. Here we keep hashes in the namesapce to prevent possible confilcts. Note that Lmod does not create modulefile for libraries listed under the `blacklist` which helps to exclude some modulefiles. Later we use `setup-modules.sh` to censor libraries by using wildcards.
 
 ## Project modulefiles
+Use `source setup-modules.sh` to project files. By default `setup-modules.sh` uses `/opt/modulefiles/` for modulepath. Modify `modulefiles` variable to change the path. `setup-modules.sh` does three tasks:
 
-Use `source setup-modules.sh` to project files. By default `setup-modules.sh` uses `/opt/modulefiles/` for modulepath. Modify `modulefiles` variable to change the path. 
-
-`setup-modules.sh` does three tasks:
- 1. censors libraries and dependencies including:
-    - `^lib.*`
-    - `^util-.*`
-    - `^perl-.*`
-    - `^py-.*`
-    - `^xcb-.*`
-    - `^go-.*`
-    - `^at-.*`
-    - `^docbook-.*`
-    - `.*proto$`
-    - `.*font.*`
+ 1. Censors libraries and dependencies by wildcards, eg. `^lib.*` `^util-.*` `.*font.*`
  1. Drops hashes
  1. Creates links from actual modulefiles to `/opt/modulefiles/`
 
 ## Bashrc
-
 To activat lmod and update the modulepath, add the following to `.bashrc` file (need to modify lmod path based on your environment):
 
 ``` bash
@@ -97,8 +83,14 @@ alias spack-setup-env='git -C /opt/spack checkout spack-latest && git -C /opt/sp
 ```
 
 ## Workflow
+We are using Spack to install software:
 
 - Activate Spack env and update the branch: `spack-setup-env`
-- Check specs: `spack spec -I <software>` 
+- Check specs: `spack spec -I <software>`
 - Install: `spack install <software>`
-- Project modulefiles: `source setup-modules.sh`
+
+Now use the following to project modulefiles:
+
+```bash
+source setup-modules.sh
+```
