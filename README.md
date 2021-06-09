@@ -12,8 +12,8 @@ Spack creates modulefiles in both Lua or Tcl formats. But the generated modulefi
 cd /opt
 git clone https://github.com/spack/spack.git
 cd spack
-git checkout -b spack-latest
-git pull origin releases/latest
+git fetch origin releases/latest:latest
+git checkout latest
 source share/spack/setup-env.sh
 spack install lmod
 ```
@@ -67,7 +67,7 @@ spack module lmod refresh --delete-tree -y
 This will create modulefiles under `/opt/spack/share/spack/lmod/linux-*-x86_64/Core/`. Here we keep hashes in the namesapce to prevent possible confilcts. Note that Lmod does not create modulefile for libraries listed under the `blacklist` which helps to exclude some modulefiles. Later we use `setup-modules.sh` to censor libraries by using wildcards.
 
 ## Project modulefiles
-Use `source setup-modules.sh` to project files. By default `setup-modules.sh` uses `/opt/modulefiles/` for modulepath. Modify `modulefiles` variable to change the path. `setup-modules.sh` does three tasks:
+Use `source setup-modules.sh` to project files. By default `setup-modules.sh` uses `/opt/modulefiles/` for destination of modulefiles (modulepath). Modify `dest` variable if you want a different modulepath. `setup-modules.sh` does three tasks:
 
  1. Censors libraries and dependencies by wildcards, eg. `^lib.*` `^util-.*` `.*font.*`
  1. Drops hashes
@@ -79,7 +79,7 @@ To activat lmod and update the modulepath, add the following to `.bashrc` file (
 ``` bash
 export MODULEPATH='/opt/modulefiles/'
 source /opt/spack/opt/spack/linux-ubuntu20.04*/gcc-9.3.0/lmod-8*/lmod/lmod/init/bash
-alias spack-setup-env='git -C /opt/spack checkout spack-latest && git -C /opt/spack pull origin releases/latest && source /opt/spack/share/spack/setup-env.sh && module unuse /opt/spack/share/spack/modules/*'
+alias spack-setup-env='git -C /opt/spack checkout latest && git -C /opt/spack fetch origin releases/latest && source /opt/spack/share/spack/setup-env.sh && module unuse /opt/spack/share/spack/modules/*'
 ```
 
 ## Workflow
