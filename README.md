@@ -1,5 +1,4 @@
 # Spack module projection
-*[Ashkan Mirzaee](https://ashki23.github.io/index.html)*
 
 Spack creates modulefiles in both Lua or Tcl formats. But the generated modulefiles includes hash numbers and located in in the Spack path. We can modify Spack to generate modulefules with no hash but it can cause many problems when there are modules with the same name. Also, Spack creates modulefile for all the depecndencies that many of them not using directly by users. This software orgenizes the namespace of the modulefiles and creates a symbolic link from them to a more familiar path (i.e., `/opt/modulefiles/`) and let users to exclude modulefiles by using wildcards.
 
